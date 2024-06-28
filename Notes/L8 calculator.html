@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator Program Explanation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculator Program Explanation</h1>
+    <p>This document explains the terms and structure of a Java-based calculator program.</p>
+
+    <h2>Overall Structure</h2>
+    <p>The program uses a <code>Scanner</code> to take input from the user and performs various arithmetic operations based on user choice.</p>
+    <pre><code>package L8;
+
+import java.util.Scanner;
+
+public class calculator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        while (true) {
+            System.out.println("For ADD type 1, SUBTRACT type 2, MULTIPLICATION type 3, DIVISION type 4, EXIT type 5");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    performAddition(sc);
+                    break;
+                case 2:
+                    performSubtraction(sc);
+                    break;
+                case 3:
+                    performMultiplication(sc);
+                    break;
+                case 4:
+                    performDivision(sc);
+                    break;
+                case 5:
+                    System.out.println("Exiting the calculator. Goodbye!");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                    sc.nextLine(); // Clear the buffer
+                    break;
+            }
+        }
+    }
+
+    private static void performAddition(Scanner sc) {
+        System.out.println("How many numbers do you want to add?");
+        int n = sc.nextInt();
+        float sum = 0;
+        System.out.println("Enter the numbers:");
+        for (int i = 0; i < n; i++) {
+            sum += sc.nextFloat();
+        }
+        System.out.println("The sum is " + sum);
+    }
+
+    private static void performSubtraction(Scanner sc) {
+        System.out.println("Enter the number of values you want to subtract:");
+        int n = sc.nextInt();
+        float[] numbers = new float[n];
+        System.out.println("Enter the values:");
+        for (int i = 0; i < n; i++) {
+            numbers[i] = sc.nextFloat();
+        }
+        while (true) {
+            System.out.println("Enter the order to subtract (e.g., 1 2 for numbers[0] - numbers[1]). Type 'finish' to end:");
+            String input = sc.next();
+            if (input.equalsIgnoreCase("finish")) {
+                break;
+            }
+            int index1 = Integer.parseInt(input) - 1;
+            int index2 = sc.nextInt() - 1;
+            numbers[index1] -= numbers[index2];
+            System.out.println("Current result: " + numbers[index1]);
+        }
+        System.out.println("The final subtraction result is " + numbers[0]);
+    }
+
+    private static void performMultiplication(Scanner sc) {
+        System.out.println("Enter the number of values you want to multiply:");
+        int n = sc.nextInt();
+        float[] numbers = new float[n];
+        System.out.println("Enter the values:");
+        for (int i = 0; i < n; i++) {
+            numbers[i] = sc.nextFloat();
+        }
+        while (true) {
+            System.out.println("Enter the order to multiply (e.g., 1 2 for numbers[0] * numbers[1]). Type 'finish' to end:");
+            String input = sc.next();
+            if (input.equalsIgnoreCase("finish")) {
+                break;
+            }
+            int index1 = Integer.parseInt(input) - 1;
+            int index2 = sc.nextInt() - 1;
+            numbers[index1] *= numbers[index2];
+            System.out.println("Current result: " + numbers[index1]);
+        }
+        System.out.println("The final multiplication result is " + numbers[0]);
+    }
+
+    private static void performDivision(Scanner sc) {
+        System.out.println("Enter the number of values you want to divide:");
+        int n = sc.nextInt();
+        float[] numbers = new float[n];
+        System.out.println("Enter the values:");
+        for (int i = 0; i < n; i++) {
+            numbers[i] = sc.nextFloat();
+        }
+        while (true) {
+            System.out.println("Enter the order to divide (e.g., 1 2 for numbers[0] / numbers[1]). Type 'finish' to end:");
+            String input = sc.next();
+            if (input.equalsIgnoreCase("finish")) {
+                break;
+            }
+            int index1 = Integer.parseInt(input) - 1;
+            int index2 = sc.nextInt() - 1;
+            if (numbers[index2] == 0) {
+                System.out.println("Error: Division by zero is not allowed. Try again.");
+                continue;
+            }
+            numbers[index1] /= numbers[index2];
+            System.out.println("Current result: " + numbers[index1]);
+        }
+        System.out.println("The final division result is " + numbers[0]);
+    }
+}
+</code></pre>
+
+    <h2>Detailed Explanation</h2>
+
+    <h3>Main Method</h3>
+    <p>This is the entry point of the program. It repeatedly prompts the user to choose an operation until they choose to exit.</p>
+    <pre><code>public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int choice;
+
+    while (true) {
+        System.out.println("For ADD type 1, SUBTRACT type 2, MULTIPLICATION type 3, DIVISION type 4, EXIT type 5");
+        choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                performAddition(sc);
+                break;
+            case 2:
+                performSubtraction(sc);
+                break;
+            case 3:
+                performMultiplication(sc);
+                break;
+            case 4:
+                performDivision(sc);
+                break;
+            case 5:
+                System.out.println("Exiting the calculator. Goodbye!");
+                sc.close();
+                return;
+            default:
+                System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                sc.nextLine(); // Clear the buffer
+                break;
+        }
+    }
+}</code></pre>
+
+    <h3>performAddition Method</h3>
+    <p>Handles the addition of multiple numbers. Prompts the user for the number of inputs, reads the inputs, and calculates the sum.</p>
+    <pre><code>private static void performAddition(Scanner sc) {
+    System.out.println("How many numbers do you want to add?");
+    int n = sc.nextInt();
+    float sum = 0;
+    System.out.println("Enter the numbers:");
+    for (int i = 0; i < n; i++) {
+        sum += sc.nextFloat();
+    }
+    System.out.println("The sum is " + sum);
+}</code></pre>
+
+    <h3>performSubtraction Method</h3>
+    <p>Handles the subtraction of multiple numbers. Prompts the user for the number of inputs, reads the inputs, and allows the user to repeatedly specify pairs of numbers to subtract until they choose to finish.</p>
+    <pre><code>private static void performSubtraction(Scanner sc) {
+    System.out.println("Enter the number of values you want to subtract:");
+    int n = sc.nextInt();
+    float[] numbers = new float[n];
+    System.out.println("Enter the values:");
+    for (int i = 0; i < n; i++) {
+        numbers[i] = sc.nextFloat();
+    }
+    while (true) {
+        System.out.println("Enter the order to subtract (e.g., 1 2 for numbers[0] - numbers[1]). Type 'finish' to end:");
+        String input = sc.next();
+        if (input.equalsIgnoreCase("finish")) {
+            break;
+        }
+        int index1 = Integer.parseInt(input) - 1;
+        int index2 = sc.nextInt() - 1;
+        numbers[index1] -= numbers[index2];
+        System.out.println("Current result: " + numbers[index1]);
+    }
+    System.out.println("The final subtraction result is " + numbers[0]);
+}</code></pre>
+
+    <h3>performMultiplication Method</h3>
+    <p>Handles the multiplication of multiple numbers. Prompts the user for the number of inputs, reads the inputs, and allows the user to repeatedly specify pairs of numbers to multiply until they choose to finish.</p>
+    <pre><code>private static void performMultiplication(Scanner sc) {
+    System.out.println("Enter the number of values you want to multiply:");
+    int n = sc.nextInt();
+    float[] numbers = new float[n];
+    System.out.println("Enter the values:");
+    for (int i = 0; i < n; i++) {
+        numbers[i] = sc.nextFloat();
+    }
+    while (true) {
+        System.out.println("Enter the order to multiply (e.g., 1 2 for numbers[0] * numbers[1]). Type 'finish' to end:");
+        String input = sc.next();
+        if (input.equalsIgnoreCase("finish")) {
+            break;
+        }
+        int index1 = Integer.parseInt(input) - 1;
+        int index2 = sc.nextInt() - 1;
+        numbers[index1] *= numbers[index2];
+        System.out.println("Current result: " + numbers[index1]);
+    }
+    System.out.println("The final multiplication result is " + numbers[0]);
+}</code></pre>
+
+    <h3>performDivision Method</h3>
+    <p>Handles the division of multiple numbers. Prompts the user for the number of inputs, reads the inputs, and allows the user to repeatedly specify pairs of numbers to divide until they choose to finish. It also checks for division by zero.</p>
+    <pre><code>private static void performDivision(Scanner sc) {
+    System.out.println("Enter the number of values you want to divide:");
+    int n = sc.nextInt();
+    float[] numbers = new float[n];
+    System.out.println("Enter the values:");
+    for (int i = 0; i < n; i++) {
+        numbers[i] = sc.nextFloat();
+    }
+    while (true) {
+        System.out.println("Enter the order to divide (e.g., 1 2 for numbers[0] / numbers[1]). Type 'finish' to end:");
+        String input = sc.next();
+        if (input.equalsIgnoreCase("finish")) {
+            break;
+        }
+        int index1 = Integer.parseInt(input) - 1;
+        int index2 = sc.nextInt() - 1;
+        if (numbers[index2] == 0) {
+            System.out.println("Error: Division by zero is not allowed. Try again.");
+            continue;
+        }
+        numbers[index1] /= numbers[index2];
+        System.out.println("Current result: " + numbers[index1]);
+    }
+    System.out.println("The final division result is " + numbers[0]);
+}</code></pre>
+
+    <h2>Key Terms</h2>
+    <ul>
+        <li><strong>Scanner</strong>: A class in the <code>java.util</code> package used to get user input.</li>
+        <li><strong>switch</strong>: A control statement that allows a variable to be tested for equality against a list of values.</li>
+        <li><strong>case</strong>: Defines a possible value for the switch statement and the code to execute if the variable matches this value.</li>
+        <li><strong>break</strong>: Terminates the current switch or loop statement.</li>
+        <li><strong>float</strong>: A data type used to store fractional numbers.</li>
+        <li><strong>for loop</strong>: A control flow statement for specifying iteration, allowing code to be executed repeatedly.</li>
+        <li><strong>while loop</strong>: A control flow statement that allows code to be executed repeatedly based on a given boolean condition.</li>
+        <li><strong>try-catch</strong>: A block of code used to handle exceptions and errors gracefully.</li>
+        <li><strong>array</strong>: A data structure that stores a fixed-size sequential collection of elements of the same type.</li>
+    </ul>
+</body>
+</html>
